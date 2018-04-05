@@ -17,6 +17,8 @@ namespace Microsoft.Extensions.Logging.Testing
             _output = output;
         }
 
+        protected ILoggerFactory loggerFactory { get; set; }
+
         public IDisposable StartLog(out ILoggerFactory loggerFactory, [CallerMemberName] string testName = null) => StartLog(out loggerFactory, LogLevel.Information, testName);
 
         public IDisposable StartLog(out ILoggerFactory loggerFactory, LogLevel minLogLevel, [CallerMemberName] string testName = null)
