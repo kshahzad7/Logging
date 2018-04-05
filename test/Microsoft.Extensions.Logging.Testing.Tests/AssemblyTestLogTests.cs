@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging.Testing.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -49,6 +50,13 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
 [TIMESTAMP] TestLogger Information: Information!
 [TIMESTAMP] TestLifetime Information: Finished test TestLogWritesToITestOutputHelper in DURATION
 ", MakeConsistent(output.Output), ignoreLineEndingDifferences: true);
+        }
+
+        [LoggingFact(LogLevel.Debug)]
+        public void TestAutomaticLoggerFactory(ILoggerFactory loggerFactory)
+        {
+            Assert.NotNull(loggerFactory);
+            loggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
         }
 
         [Fact]
