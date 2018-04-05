@@ -18,6 +18,7 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
             IXunitTestCase testCase;
 
             var testClass = testMethod.TestClass.Class;
+            var parameters = testMethod.Method.GetParameters();
             while (testClass != null)
             {
                 if (testClass.Name == typeof(LoggedTest).FullName)
@@ -30,13 +31,9 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
             {
                 testCase = new ExecutionErrorTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod, "[LoggingFact] methods can only be used on methods of a class that inherits LoggedTest.");
             }
-
-            //var trait = testMethod.Method.GetCustomAttributes(typeof(LoggingFactAttribute)).Single().
-
-            var parameters = testMethod.Method.GetParameters();
-            if (parameters.Count() == 1 && parameters.Single().ParameterType.Name == typeof(ILoggerFactory).FullName)
+            else if (parameters.Count() == 1 && parameters.Single().ParameterType.Name == typeof(ILoggerFactory).FullName)
             {
-                testCase = new XunitTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
+                testCase = new XunitLoggingTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
             }
             else if (testMethod.Method.GetParameters().Any())
             {

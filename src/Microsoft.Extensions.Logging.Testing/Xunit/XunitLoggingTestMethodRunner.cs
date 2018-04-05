@@ -21,7 +21,6 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
 
         protected override Task<RunSummary> RunTestCaseAsync(IXunitTestCase testCase)
         {
-            //throw new Exception($"Test case has {testCase.TestMethodArguments.Length} arguments");
             return testCase.RunAsync(DiagnosticMessageSink, MessageBus, ConstructorArguments, new ExceptionAggregator(Aggregator), CancellationTokenSource);
         }
     }
