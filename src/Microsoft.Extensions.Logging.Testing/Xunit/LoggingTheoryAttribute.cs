@@ -8,15 +8,10 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [XunitTestCaseDiscoverer("Microsoft.Extensions.Logging.Testing.Xunit.XunitLoggingTheoryDiscoverer", "Microsoft.Extensions.Logging.Testing")]
-    public class LoggingTheoryAttribute : TheoryAttribute
+    public class LoggingTheoryAttribute : LoggingFactAttribute
     {
-        public LoggingTheoryAttribute() : this(LogLevel.Debug) { }
+        public LoggingTheoryAttribute() : base() { }
 
-        public LoggingTheoryAttribute(LogLevel logLevel)
-        {
-            LogLevel = logLevel;
-        }
-
-        public LogLevel LogLevel { get; }
+        public LoggingTheoryAttribute(LogLevel logLevel) : base(logLevel) { }
     }
 }

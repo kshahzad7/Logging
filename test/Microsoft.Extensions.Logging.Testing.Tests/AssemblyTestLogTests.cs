@@ -52,11 +52,19 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
 ", MakeConsistent(output.Output), ignoreLineEndingDifferences: true);
         }
 
-        [Fact]
+        [LoggingFact]
         public void TestAutomaticLoggerFactory()
         {
             Assert.NotNull(LoggerFactory);
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
+        }
+
+        [LoggingTheory]
+        [InlineData("Hello world")]
+        public void TestAutomaticLoggerFactoryTheory(string argument)
+        {
+            Assert.NotNull(LoggerFactory);
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
         }
 
         [Fact]

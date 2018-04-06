@@ -16,26 +16,7 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
         public override IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo factAttribute)
         {
             IXunitTestCase testCase;
-
-            var testClass = testMethod.TestClass.Class;
-            var parameters = testMethod.Method.GetParameters();
-            while (testClass != null)
-            {
-                if (testClass.Name == typeof(LoggedTest).FullName)
-                {
-                    break;
-                }
-                testClass = testClass.BaseType;
-            }
-            if (testClass == null)
-            {
-                testCase = new ExecutionErrorTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod, "[LoggingFact] methods can only be used on methods of a class that inherits LoggedTest.");
-            }
-            else if (parameters.Count() == 1 && parameters.Single().ParameterType.Name == typeof(ILoggerFactory).FullName)
-            {
-                testCase = new XunitLoggingTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
-            }
-            else if (testMethod.Method.GetParameters().Any())
+            if (testMethod.Method.GetParameters().Any())
             {
                 testCase = new ExecutionErrorTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod, "[LoggingFact] methods are not allowed to have parameters other than an ILoggerFactory. Did you mean to use [LoggingTheory]?");
             }
@@ -45,7 +26,7 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
             }
             else
             {
-                testCase = CreateTestCase(discoveryOptions, testMethod, factAttribute);
+                testCase = new XunitLoggingTestCase(DiagnosticMessageSink, discoveryOptions.MethodDisplayOrDefault(), testMethod);
             }
 
             return new[] { testCase };
