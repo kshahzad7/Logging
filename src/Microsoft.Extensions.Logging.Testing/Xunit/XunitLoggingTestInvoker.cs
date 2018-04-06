@@ -25,7 +25,9 @@ namespace Microsoft.Extensions.Logging.Testing.Xunit
                 var classType = testClass.GetType();
                 var testOutputHelper = ConstructorArguments.Single(a => typeof(ITestOutputHelper).IsAssignableFrom(a.GetType())) as ITestOutputHelper;
                 var loggingFactAttribute = TestMethod.GetCustomAttribute(typeof(LoggingFactAttribute)) as LoggingFactAttribute;
-                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggingFactAttribute.LogLevel, TestMethod.Name);
+                var testName = TestMethodArguments.Aggregate(TestMethod.Name, (a, b) => $"{a}_{b}");
+
+                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggingFactAttribute.LogLevel, testName);
                 (testClass as LoggedTest).LoggerFactory = loggerFactory;
             }
 
