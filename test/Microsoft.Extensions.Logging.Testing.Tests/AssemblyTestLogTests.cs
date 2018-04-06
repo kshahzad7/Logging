@@ -9,7 +9,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging.Testing.Xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -52,14 +51,14 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
 ", MakeConsistent(output.Output), ignoreLineEndingDifferences: true);
         }
 
-        [LoggingFact]
+        [LoggedFact]
         public void TestAutomaticLoggerFactory()
         {
             Assert.NotNull(LoggerFactory);
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
         }
 
-        [LoggingTheory]
+        [LoggedTheory]
         [InlineData("Hello world")]
         public void TestAutomaticLoggerFactoryTheory(string argument)
         {

@@ -1,2 +1,2 @@
-﻿[assembly: Xunit.TestFramework("Microsoft.Extensions.Logging.Testing.Xunit.XunitLoggingTestFramework", "Microsoft.Extensions.Logging.Testing")]
+﻿[assembly: Xunit.TestFramework("Microsoft.Extensions.Logging.Testing.LoggedTestFramework", "Microsoft.Extensions.Logging.Testing")]
 
