@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>Helpers for writing tests that use Microsoft.Extensions.Logging. Contains null implementations of the abstractions that do nothing, as well as test implementations that are observable.</Description>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <PackageTags>$(PackageTags);testing</PackageTags>
     <EnableApiCheck>false</EnableApiCheck>
@@ -21,6 +21,10 @@
     <PackageReference Include="xunit.assert" Version="$(XunitAssertPackageVersion)" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="$(SerilogExtensionsLoggingPackageVersion)" />
     <PackageReference Include="Serilog.Sinks.File" Version="$(SerilogSinksFilePackageVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Xunit\Shared\" />
   </ItemGroup>
 
 </Project>
