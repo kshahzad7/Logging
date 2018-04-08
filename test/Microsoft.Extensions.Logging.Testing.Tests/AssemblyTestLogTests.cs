@@ -51,21 +51,6 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
 ", MakeConsistent(output.Output), ignoreLineEndingDifferences: true);
         }
 
-        [LoggedFact]
-        public void TestAutomaticLoggerFactory()
-        {
-            Assert.NotNull(LoggerFactory);
-            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
-        }
-
-        [LoggedTheory]
-        [InlineData("Hello world")]
-        public void TestAutomaticLoggerFactoryTheory(string argument)
-        {
-            Assert.NotNull(LoggerFactory);
-            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
-        }
-
         [Fact]
         public Task TestLogWritesToGlobalLogFile() =>
             RunTestLogFunctionalTest((tempDir, loggerFactory) =>

@@ -10,7 +10,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestCaseRunner : XunitTestCaseRunner
+    internal class LoggedTestCaseRunner : XunitTestCaseRunner
     {
         public LoggedTestCaseRunner(IXunitTestCase testCase, string displayName, string skipReason, object[] constructorArguments, object[] testMethodArguments, IMessageBus messageBus, ExceptionAggregator aggregator, CancellationTokenSource cancellationTokenSource) : base(testCase, displayName, skipReason, constructorArguments, testMethodArguments, messageBus, aggregator, cancellationTokenSource)
         {

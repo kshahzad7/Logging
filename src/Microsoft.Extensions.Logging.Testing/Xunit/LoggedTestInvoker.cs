@@ -6,12 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestInvoker : XunitTestInvoker
+    internal class LoggedTestInvoker : XunitTestInvoker
     {
         public LoggedTestInvoker(ITest test, IMessageBus messageBus, Type testClass, object[] constructorArguments, MethodInfo testMethod, object[] testMethodArguments, IReadOnlyList<BeforeAfterTestAttribute> beforeAfterAttributes, ExceptionAggregator aggregator, CancellationTokenSource cancellationTokenSource) : base(test, messageBus, testClass, constructorArguments, testMethod, testMethodArguments, beforeAfterAttributes, aggregator, cancellationTokenSource)
         {
@@ -25,10 +26,10 @@ namespace Microsoft.Extensions.Logging.Testing
             {
                 var classType = testClass.GetType();
                 var testOutputHelper = ConstructorArguments.Single(a => typeof(ITestOutputHelper).IsAssignableFrom(a.GetType())) as ITestOutputHelper;
-                var loggingFactAttribute = TestMethod.GetCustomAttribute(typeof(LoggedFactAttribute)) as LoggedFactAttribute;
+                var loggedTest = TestMethod.GetCustomAttribute(typeof(FactAttribute)) as ILoggedTest;
                 var testName = TestMethodArguments.Aggregate(TestMethod.Name, (a, b) => $"{a}_{b}");
 
-                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggingFactAttribute.LogLevel, testName);
+                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggedTest.LogLevel, testName);
                 (testClass as LoggedTest).LoggerFactory = loggerFactory;
             }
 

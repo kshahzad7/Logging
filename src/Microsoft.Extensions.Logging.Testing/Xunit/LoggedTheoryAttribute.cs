@@ -2,16 +2,22 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System;
+using Xunit;
 using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [XunitTestCaseDiscoverer("Microsoft.Extensions.Logging.Testing.LoggedTheoryDiscoverer", "Microsoft.Extensions.Logging.Testing")]
-    public class LoggedTheoryAttribute : LoggedFactAttribute
+    public class LoggedTheoryAttribute : TheoryAttribute, ILoggedTest
     {
-        public LoggedTheoryAttribute() : base() { }
+        public LoggedTheoryAttribute() : this(LogLevel.Debug) { }
 
-        public LoggedTheoryAttribute(LogLevel logLevel) : base(logLevel) { }
+        public LoggedTheoryAttribute(LogLevel logLevel)
+        {
+            LogLevel = logLevel;
+        }
+
+        public LogLevel LogLevel { get; }
     }
 }

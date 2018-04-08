@@ -9,7 +9,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestAssemblyRunner : XunitTestAssemblyRunner
+    internal class LoggedTestAssemblyRunner : XunitTestAssemblyRunner
     {
         public LoggedTestAssemblyRunner(ITestAssembly testAssembly, IEnumerable<IXunitTestCase> testCases, IMessageSink diagnosticMessageSink, IMessageSink executionMessageSink, ITestFrameworkExecutionOptions executionOptions) : base(testAssembly, testCases, diagnosticMessageSink, executionMessageSink, executionOptions)
         {

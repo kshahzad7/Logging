@@ -9,7 +9,7 @@ namespace Microsoft.Extensions.Logging.Testing
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     [XunitTestCaseDiscoverer("Microsoft.Extensions.Logging.Testing.LoggedFactDiscoverer", "Microsoft.Extensions.Logging.Testing")]
-    public class LoggedFactAttribute : FactAttribute
+    public class LoggedFactAttribute : FactAttribute, ILoggedTest
     {
         public LoggedFactAttribute() : this(LogLevel.Debug) { }
 

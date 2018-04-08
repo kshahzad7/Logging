@@ -7,7 +7,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    class LoggedTheoryDiscoverer : TheoryDiscoverer
+    internal class LoggedTheoryDiscoverer : TheoryDiscoverer
     {
         public LoggedTheoryDiscoverer(IMessageSink diagnosticMessageSink) : base(diagnosticMessageSink)
         {

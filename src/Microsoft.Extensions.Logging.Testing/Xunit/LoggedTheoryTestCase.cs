@@ -9,7 +9,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTheoryTestCase : XunitTheoryTestCase
+    internal class LoggedTheoryTestCase : XunitTheoryTestCase
     {
         [Obsolete("Called by the de-serializer; should only be called by deriving classes for de-serialization purposes")]
         public LoggedTheoryTestCase() : base()

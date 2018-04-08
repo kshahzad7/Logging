@@ -9,7 +9,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestCollectionRunner : XunitTestCollectionRunner
+    internal class LoggedTestCollectionRunner : XunitTestCollectionRunner
     {
         private readonly IMessageSink _diagnosticMessageSink;
 

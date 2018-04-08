@@ -7,7 +7,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestFramework : XunitTestFramework
+    internal class LoggedTestFramework : XunitTestFramework
     {
         public LoggedTestFramework(IMessageSink messageSink) : base(messageSink)
         {

@@ -8,7 +8,7 @@ using Xunit.Sdk;
 
 namespace Microsoft.Extensions.Logging.Testing
 {
-    public class LoggedTestFrameworkExecutor : XunitTestFrameworkExecutor
+    internal class LoggedTestFrameworkExecutor : XunitTestFrameworkExecutor
     {
         public LoggedTestFrameworkExecutor(AssemblyName assemblyName, ISourceInformationProvider sourceInformationProvider, IMessageSink diagnosticMessageSink) : base(assemblyName, sourceInformationProvider, diagnosticMessageSink)
         {
