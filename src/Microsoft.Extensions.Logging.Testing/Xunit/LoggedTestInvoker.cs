@@ -26,10 +26,10 @@ namespace Microsoft.Extensions.Logging.Testing
             {
                 var classType = loggedTestClass.GetType();
                 var testOutputHelper = ConstructorArguments.Single(a => typeof(ITestOutputHelper).IsAssignableFrom(a.GetType())) as ITestOutputHelper;
-                var loggedTest = TestMethod.GetCustomAttribute(typeof(FactAttribute)) as ILoggedTest;
+                var logLevelAttribute = TestMethod.GetCustomAttribute(typeof(LogLevelAttribute)) as LogLevelAttribute;
                 var testName = TestMethodArguments.Aggregate(TestMethod.Name, (a, b) => $"{a}_{(b ?? "null")}");
 
-                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggedTest.LogLevel, out var resolvedTestName, testName);
+                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, logLevelAttribute?.LogLevel ?? LogLevel.Debug, out var resolvedTestName, testName);
                 loggedTestClass.LoggerFactory = loggerFactory;
                 loggedTestClass.TestMethodTestName = resolvedTestName;
             }

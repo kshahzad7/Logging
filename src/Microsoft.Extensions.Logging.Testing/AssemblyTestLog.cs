@@ -262,7 +262,7 @@ namespace Microsoft.Extensions.Logging.Testing
                 if (InvalidFileChars.Contains(c))
                 {
                     var escapedChar = Convert.ToByte(c).ToString("x");
-                    sb.Append("\\x");
+                    sb.Append("-x");
                     sb.Append(escapedChar);
                 }
                 else

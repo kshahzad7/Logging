@@ -13,6 +13,11 @@ namespace Microsoft.Extensions.Logging.Testing
         {
         }
 
+        protected override ITestFrameworkDiscoverer CreateDiscoverer(IAssemblyInfo assemblyInfo)
+        {
+            return new LoggedTestFrameworkDiscoverer(assemblyInfo, SourceInformationProvider, DiagnosticMessageSink);
+        }
+
         protected override ITestFrameworkExecutor CreateExecutor(AssemblyName assemblyName)
         {
             return new LoggedTestFrameworkExecutor(assemblyName, SourceInformationProvider, DiagnosticMessageSink);

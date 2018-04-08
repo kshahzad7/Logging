@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.Logging.Testing
     internal class LoggedConditionalFactDiscoverer : LoggedFactDiscoverer
     {
         private readonly IMessageSink _diagnosticMessageSink;
-        
+
         public LoggedConditionalFactDiscoverer(IMessageSink diagnosticMessageSink) : base(diagnosticMessageSink)
         {
             _diagnosticMessageSink = diagnosticMessageSink;

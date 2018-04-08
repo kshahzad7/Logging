@@ -1,6 +1,7 @@
 ﻿// Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using Microsoft.AspNetCore.Testing.xunit;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -12,23 +13,45 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
         {
         }
 
-        [LoggedFact]
+        [Fact]
         public void LoggedFactGetsInitializedLoggerFactory()
         {
             Assert.NotNull(LoggerFactory);
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogDebug("Debug Hello world");
         }
 
-        [LoggedTheory]
+        [Theory]
         [InlineData("Hello world")]
         public void LoggedTheoryGetsInitializedLoggerFactory(string argument)
         {
             Assert.NotNull(LoggerFactory);
             // Use the test argument
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogDebug("Debug Hello world");
         }
 
-        [LoggedTheory]
+        [Fact]
+        [LogLevel(LogLevel.Information)]
+        public void LoggedFactGetsInitializedLoggerFactory_Information()
+        {
+            Assert.NotNull(LoggerFactory);
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogDebug("Debug Hello world");
+        }
+
+        [Theory]
+        [InlineData("Hello world")]
+        [LogLevel(LogLevel.Information)]
+        public void LoggedTheoryGetsInitializedLoggerFactory_Information(string argument)
+        {
+            Assert.NotNull(LoggerFactory);
+            // Use the test argument
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogDebug("Debug Hello world");
+        }
+
+        [Theory]
         [InlineData(null)]
         public void LoggedTheoryNullArgumentsAreEscaped(string argument)
         {
@@ -38,35 +61,20 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
         }
 
-        [LoggedConditionalFact]
+        [ConditionalFact]
         public void ConditionalLoggedFactGetsInitializedLoggerFactory()
         {
             Assert.NotNull(LoggerFactory);
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation("Hello world");
         }
 
-        [LoggedConditionalTheory]
+        [ConditionalTheory]
         [InlineData("Hello world")]
         public void ConditionalLoggedTheoryGetsInitializedLoggerFactory(string argument)
         {
             Assert.NotNull(LoggerFactory);
             // Use the test argument
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
-        }
-
-        [Fact]
-        public void FactDoesNotGetInitializedLoggerFactory()
-        {
-            Assert.Null(LoggerFactory);
-        }
-
-        [Theory]
-        [InlineData("Hello world")]
-        public void TheoryDoesNotGetInitializedLoggerFactory(string argument)
-        {
-            Assert.Null(LoggerFactory);
-            // Use the test argument
-            LoggerFactory?.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
         }
     }
 }

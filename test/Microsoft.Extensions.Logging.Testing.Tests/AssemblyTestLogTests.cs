@@ -56,7 +56,7 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
             RunTestLogFunctionalTest((tempDir) =>
             {
                 var illegalTestName = "Testing_https://localhost:5000";
-                var escapedTestName = "Testing_https\\x3a\\x2f\\x2flocalhost\\x3a5000";
+                var escapedTestName = "Testing_https-x3a-x2f-x2flocalhost-x3a5000";
                 using (var testAssemblyLog = AssemblyTestLog.Create("FakeTestAssembly", baseDirectory: tempDir))
                 using (testAssemblyLog.StartTestLog(output: null, className: "FakeTestAssembly.FakeTestClass", loggerFactory: out var testLoggerFactory, minLogLevel: LogLevel.Trace, resolvedTestName: out var resolvedTestname, testName: illegalTestName))
                 {
@@ -64,7 +64,7 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
                 }
             });
 
-        [LoggedFact]
+        [Fact]
         public Task TestLogWritesToGlobalLogFile() =>
             RunTestLogFunctionalTest((tempDir) =>
             {
@@ -105,8 +105,8 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
 [TestLifetime] [Information] Finished test ""FakeTestName"" in DURATION
 ", testLogContent, ignoreLineEndingDifferences: true);
             });
-        
-        [LoggedFact]
+
+        [Fact]
         public Task TestLogTruncatesTestNameToAvoidLongPaths() =>
             RunTestLogFunctionalTest((tempDir) =>
             {
@@ -133,7 +133,7 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
                 Assert.Equal(longTestName.Substring(longTestName.Length - testFileName.Length / 2, testFileName.Length / 2), testFileName.Substring(testFileName.Length - testFileName.Length / 2, testFileName.Length / 2));
             });
 
-        [LoggedFact]
+        [Fact]
         public  Task TestLogEnumerateFilenamesToAvoidCollisions() =>
             RunTestLogFunctionalTest((tempDir) =>
             {
