@@ -22,15 +22,16 @@ namespace Microsoft.Extensions.Logging.Testing
         {
             var testClass = base.CreateTestClass();
 
-            if (typeof(LoggedTest).IsAssignableFrom(testClass.GetType()))
+            if (testClass is LoggedTest loggedTestClass)
             {
-                var classType = testClass.GetType();
+                var classType = loggedTestClass.GetType();
                 var testOutputHelper = ConstructorArguments.Single(a => typeof(ITestOutputHelper).IsAssignableFrom(a.GetType())) as ITestOutputHelper;
                 var loggedTest = TestMethod.GetCustomAttribute(typeof(FactAttribute)) as ILoggedTest;
-                var testName = TestMethodArguments.Aggregate(TestMethod.Name, (a, b) => $"{a}_{b}");
+                var testName = TestMethodArguments.Aggregate(TestMethod.Name, (a, b) => $"{a}_{(b ?? "null")}");
 
-                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggedTest.LogLevel, testName);
-                (testClass as LoggedTest).LoggerFactory = loggerFactory;
+                AssemblyTestLog.ForAssembly(classType.GetTypeInfo().Assembly).StartTestLog(testOutputHelper, classType.FullName, out var loggerFactory, loggedTest.LogLevel, out var resolvedTestName, testName);
+                loggedTestClass.LoggerFactory = loggerFactory;
+                loggedTestClass.TestMethodTestName = resolvedTestName;
             }
 
             return testClass;

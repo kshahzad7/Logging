@@ -28,6 +28,16 @@ namespace Microsoft.Extensions.Logging.Testing.Tests
             LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
         }
 
+        [LoggedTheory]
+        [InlineData(null)]
+        public void LoggedTheoryNullArgumentsAreEscaped(string argument)
+        {
+            Assert.NotNull(LoggerFactory);
+            Assert.Equal($"{nameof(LoggedTheoryNullArgumentsAreEscaped)}_null", TestMethodTestName);
+            // Use the test argument
+            LoggerFactory.CreateLogger(nameof(AssemblyTestLogTests)).LogInformation(argument);
+        }
+
         [LoggedConditionalFact]
         public void ConditionalLoggedFactGetsInitializedLoggerFactory()
         {
